@@ -37,6 +37,14 @@ This can get quite annoying indeed. Stack/Stack simplifies that:
 As you can see, by arranging the layers as a stack, they become a lot easier
 to work with.
 
+In the front controller, you need to serve the request:
+
+    use Symfony\Component\HttpFoundation\Request;
+
+    $request = Request::createFromGlobals();
+    $response = $app->handle($request)->send();
+    $app->terminate($request, $response);
+
 ## Inspiration
 
 * [Rack::Builder](http://rack.rubyforge.org/doc/Rack/Builder.html)
