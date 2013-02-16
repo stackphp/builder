@@ -41,6 +41,13 @@ class StackTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function pushShouldReturnSelf()
+    {
+        $stack = new Stack();
+        $this->assertSame($stack, $stack->push('Stack\AppendA'));
+    }
+
+    /** @test */
     public function appendMiddlewareShouldAppendToBody()
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
