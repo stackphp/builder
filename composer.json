@@ -19,5 +19,8 @@
     },
     "autoload": {
         "psr-0": { "Stack": "src" }
+    },
+    "extra": {
+        "branch-alias": { "dev-master": "1.0-dev" }
     }
 }
