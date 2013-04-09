@@ -1,6 +1,6 @@
 {
-    "name": "stack/stack",
-    "description": "Stack of middlewares based on HttpKernelInterface.",
+    "name": "stack/builder",
+    "description": "Builder for stack middlewares based on HttpKernelInterface.",
     "keywords": ["stack"],
     "license": "MIT",
     "authors": [

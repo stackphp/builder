@@ -3,7 +3,7 @@
 namespace functional;
 
 use Silex\Application;
-use Stack\Stack;
+use Stack\Builder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -23,7 +23,7 @@ class SilexApplicationTest extends \PHPUnit_Framework_TestCase
             $finished = true;
         });
 
-        $stack = (new Stack())
+        $stack = (new Builder())
             ->push('functional\Append', '.A')
             ->push('functional\Append', '.B');
 

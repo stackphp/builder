@@ -4,7 +4,7 @@ namespace Stack;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class Stack
+class Builder
 {
     private $specs;
 

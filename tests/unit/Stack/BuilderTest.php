@@ -7,15 +7,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
 
-/** @covers Stack\Stack */
-class StackTest extends \PHPUnit_Framework_TestCase
+/** @covers Stack\Builder */
+class BuilderTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
     public function withoutMiddlewaresItShouldReturnOriginalResponse()
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
 
-        $stack = new Stack();
+        $stack = new Builder();
         $resolved = $stack->resolve($app);
 
         $request = Request::create('/');
@@ -30,7 +30,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getTerminableMock();
 
-        $stack = new Stack();
+        $stack = new Builder();
         $resolved = $stack->resolve($app);
 
         $request = Request::create('/');
@@ -43,7 +43,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function pushShouldReturnSelf()
     {
-        $stack = new Stack();
+        $stack = new Builder();
         $this->assertSame($stack, $stack->push('Stack\AppendA'));
     }
 
@@ -52,7 +52,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
 
-        $stack = new Stack();
+        $stack = new Builder();
         $stack->push('Stack\AppendA');
         $resolved = $stack->resolve($app);
 
@@ -67,7 +67,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
 
-        $stack = new Stack();
+        $stack = new Builder();
         $stack->push('Stack\AppendA');
         $stack->push('Stack\AppendB');
         $resolved = $stack->resolve($app);
@@ -83,7 +83,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
 
-        $stack = new Stack();
+        $stack = new Builder();
         $stack->push('Stack\Append', '.foo');
         $stack->push('Stack\Append', '.bar');
         $resolved = $stack->resolve($app);

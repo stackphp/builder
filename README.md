@@ -1,8 +1,8 @@
-# Stack/Stack
+# Stack/Builder
 
-Stack of middlewares based on HttpKernelInterface.
+Builder for stack middlewares based on HttpKernelInterface.
 
-Stack/Stack is a small library that helps you construct a nested
+Stack/Builder is a small library that helps you construct a nested
 HttpKernelInterface decorator tree. It models it as a stack of middlewares.
 
 ## Example
@@ -26,9 +26,9 @@ logger and cache middlewares, you'll have to do something like this:
         new Monolog\Logger('app')
     );
 
-This can get quite annoying indeed. Stack/Stack simplifies that:
+This can get quite annoying indeed. Stack/Builder simplifies that:
 
-    $stack = (new Stack\Stack())
+    $stack = (new Stack\Builder())
         ->push('Stack\Logger', new Monolog\Logger('app'))
         ->push('Symfony\Component\HttpKernel\HttpCache\HttpCache', new Store(__DIR__.'/cache'));
 
