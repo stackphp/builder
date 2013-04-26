@@ -8,7 +8,7 @@ HttpKernelInterface decorator tree. It models it as a stack of middlewares.
 ## Example
 
 If you want to decorate a [silex](https://github.com/fabpot/Silex) app with
-logger and cache middlewares, you'll have to do something like this:
+session and cache middlewares, you'll have to do something like this:
 
     use Symfony\Component\HttpKernel\HttpCache\Store;
 
@@ -18,18 +18,17 @@ logger and cache middlewares, you'll have to do something like this:
         return 'Hello World!';
     });
 
-    $app = new Stack\Logger(
+    $app = new Stack\Session(
         new Symfony\Component\HttpKernel\HttpCache\HttpCache(
             $app,
             new Store(__DIR__.'/cache')
-        ),
-        new Monolog\Logger('app')
+        )
     );
 
 This can get quite annoying indeed. Stack/Builder simplifies that:
 
     $stack = (new Stack\Builder())
-        ->push('Stack\Logger', new Monolog\Logger('app'))
+        ->push('Stack\Session')
         ->push('Symfony\Component\HttpKernel\HttpCache\HttpCache', new Store(__DIR__.'/cache'));
 
     $app = $stack->resolve($app);
