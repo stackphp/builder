@@ -70,7 +70,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function prependMiddlewareShouldPrependToBody()
+    public function unshiftMiddlewareShouldPutMiddlewareBeforePushed()
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
 
