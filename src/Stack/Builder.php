@@ -13,6 +13,14 @@ class Builder
         $this->specs = new \SplStack();
     }
 
+    public function unshift(/*$kernelClass, $args...*/)
+    {
+        $spec = func_get_args();
+        $this->specs->unshift($spec);
+
+        return $this;
+    }
+
     public function push(/*$kernelClass, $args...*/)
     {
         $spec = func_get_args();

@@ -48,6 +48,13 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function unshiftShouldReturnSelf()
+    {
+        $stack = new Builder();
+        $this->assertSame($stack, $stack->unshift('Stack\AppendA'));
+    }
+
+    /** @test */
     public function appendMiddlewareShouldAppendToBody()
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
@@ -60,6 +67,22 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $response = $resolved->handle($request);
 
         $this->assertSame('ok.A', $response->getContent());
+    }
+
+    /** @test */
+    public function prependMiddlewareShouldPrependToBody()
+    {
+        $app = $this->getHttpKernelMock(new Response('ok'));
+
+        $stack = new Builder();
+        $stack->push('Stack\Append', '2.');
+        $stack->unshift('Stack\Append', '1.');
+        $resolved = $stack->resolve($app);
+
+        $request = Request::create('/');
+        $response = $resolved->handle($request);
+
+        $this->assertSame('ok2.1.', $response->getContent());
     }
 
     /** @test */
