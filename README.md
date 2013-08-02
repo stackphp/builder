@@ -44,6 +44,18 @@ In the front controller, you need to serve the request:
     $response = $app->handle($request)->send();
     $app->terminate($request, $response);
 
+Stack/Builder also supports pushing a `callable` on to the stack, for situations
+where instantiating middlewares might be more complicated. The `callable` should
+accept a `HttpKernelInterface` as the first argument and should also return a
+`HttpKernelInterface`. The example above could be rewritten as:
+
+    $stack = (new Stack\Builder())
+        ->push('Stack\Session')
+        ->push(function ($app) {
+            $cache = new HttpCache($app, new Store(__DIR__.'/cache'));
+            return $cache;
+        });
+
 ## Inspiration
 
 * [Rack::Builder](http://rack.rubyforge.org/doc/Rack/Builder.html)

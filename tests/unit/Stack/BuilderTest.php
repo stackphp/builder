@@ -117,6 +117,22 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('ok.bar.foo', $response->getContent());
     }
 
+    /** @test */
+    public function resolveShouldCallSpecFactories()
+    {
+        $app = $this->getHttpKernelMock(new Response('ok'));
+
+        $stack = new Builder();
+        $stack->push(function ($app) { return new Append($app, '.foo'); });
+        $stack->push(function ($app) { return new Append($app, '.bar'); });
+        $resolved = $stack->resolve($app);
+
+        $request = Request::create('/');
+        $response = $resolved->handle($request);
+
+        $this->assertSame('ok.bar.foo', $response->getContent());
+    }
+
     private function getHttpKernelMock(Response $response)
     {
         $app = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');

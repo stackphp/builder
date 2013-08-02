@@ -35,11 +35,18 @@ class Builder
 
         foreach ($this->specs as $spec) {
             $args = $spec;
-            $kernelClass = array_shift($args);
-            array_unshift($args, $app);
+            $firstArg = array_shift($args);
 
-            $reflection = new \ReflectionClass($kernelClass);
-            $app = $reflection->newInstanceArgs($args);
+            if (is_callable($firstArg)) {
+                $app = $firstArg($app);
+            } else {
+                $kernelClass = $firstArg;
+                array_unshift($args, $app);
+
+                $reflection = new \ReflectionClass($kernelClass);
+                $app = $reflection->newInstanceArgs($args);
+            }
+
             array_unshift($middlewares, $app);
         }
 
