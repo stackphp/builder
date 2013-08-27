@@ -31,4 +31,15 @@ class StackedHttpKernel implements HttpKernelInterface, TerminableInterface
             }
         }
     }
+
+    public function run(Request $request = null)
+    {
+        if (null === $request) {
+            $request = Request::createFromGlobals();
+        }
+
+        $response = $this->handle($request);
+        $response->send();
+        $this->terminate($request, $response);
+    }
 }
