@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class StackedHttpKernel implements HttpKernelInterface, TerminableInterface
 {
     private $app;
-    private $middlewares = [];
+    private $middlewares = array();
 
     public function __construct(HttpKernelInterface $app, array $middlewares)
     {
