@@ -31,7 +31,7 @@ class Builder
 
     public function resolve(HttpKernelInterface $app)
     {
-        $middlewares = [$app];
+        $middlewares = array($app);
 
         foreach ($this->specs as $spec) {
             $args = $spec;
