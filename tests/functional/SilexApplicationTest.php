@@ -23,7 +23,8 @@ class SilexApplicationTest extends \PHPUnit_Framework_TestCase
             $finished = true;
         });
 
-        $stack = (new Builder())
+        $stack = new Builder();
+        $stack
             ->push('functional\Append', '.A')
             ->push('functional\Append', '.B');
 
