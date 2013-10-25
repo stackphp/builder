@@ -13,7 +13,7 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
     public function handleShouldDelegateToApp()
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
-        $kernel = new StackedHttpKernel($app, [$app]);
+        $kernel = new StackedHttpKernel($app, array($app));
 
         $request = Request::create('/');
         $response = $kernel->handle($request);
@@ -27,7 +27,7 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
         $app = $this->getHttpKernelMock(new Response('ok'));
         $foo = $this->getHttpKernelMock(new Response('foo'));
         $bar = $this->getHttpKernelMock(new Response('bar'));
-        $kernel = new StackedHttpKernel($app, [$app, $foo, $bar]);
+        $kernel = new StackedHttpKernel($app, array($app, $foo, $bar));
 
         $request = Request::create('/');
         $response = $kernel->handle($request);
@@ -41,7 +41,7 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
         $app = $this->getTerminableMock(new Response('ok'));
         $foo = $this->getTerminableMock();
         $bar = $this->getTerminableMock();
-        $kernel = new StackedHttpKernel($app, [$app, $foo, $bar]);
+        $kernel = new StackedHttpKernel($app, array($app, $foo, $bar));
 
         $request = Request::create('/');
         $response = $kernel->handle($request);
