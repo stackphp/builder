@@ -48,10 +48,40 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function pushShouldIgnoreInvalidInput()
+    {
+        $request = Request::create('/');
+        $response = new Response('ok');
+        $app = $this->getHttpKernelMock($response);
+
+        $stack = new Builder();
+        $stack->push();
+        $resolved = $stack->resolve($app);
+
+        $this->assertSame($response,$resolved->handle($request));
+
+    }
+
+    /** @test */
     public function unshiftShouldReturnSelf()
     {
         $stack = new Builder();
         $this->assertSame($stack, $stack->unshift('Stack\AppendA'));
+    }
+
+    /** @test */
+    public function unshiftShouldIgnoreInvalidInput()
+    {
+        $request = Request::create('/');
+        $response = new Response('ok');
+        $app = $this->getHttpKernelMock($response);
+
+        $stack = new Builder();
+        $stack->unshift();
+        $resolved = $stack->resolve($app);
+
+        $this->assertSame($response,$resolved->handle($request));
+
     }
 
     /** @test */
