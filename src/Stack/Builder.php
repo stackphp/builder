@@ -15,16 +15,20 @@ class Builder
 
     public function unshift(/*$kernelClass, $args...*/)
     {
-        $spec = func_get_args();
-        $this->specs->unshift($spec);
+        if (func_num_args() > 0) {
+            $spec = func_get_args();
+            $this->specs->unshift($spec);
+        }
 
         return $this;
     }
 
     public function push(/*$kernelClass, $args...*/)
     {
-        $spec = func_get_args();
-        $this->specs->push($spec);
+        if (func_num_args() > 0) {
+            $spec = func_get_args();
+            $this->specs->push($spec);
+        }
 
         return $this;
     }
