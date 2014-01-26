@@ -48,18 +48,11 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function pushShouldIgnoreInvalidInput()
+    public function pushShouldThrowOnInvalidInput()
     {
-        $request = Request::create('/');
-        $response = new Response('ok');
-        $app = $this->getHttpKernelMock($response);
-
+        $this->setExpectedException("\\InvalidArgumentException","Missing argument(s) when calling push");
         $stack = new Builder();
         $stack->push();
-        $resolved = $stack->resolve($app);
-
-        $this->assertSame($response,$resolved->handle($request));
-
     }
 
     /** @test */
@@ -70,18 +63,11 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function unshiftShouldIgnoreInvalidInput()
+    public function unshiftShouldThrowOnInvalidInput()
     {
-        $request = Request::create('/');
-        $response = new Response('ok');
-        $app = $this->getHttpKernelMock($response);
-
+        $this->setExpectedException("\\InvalidArgumentException","Missing argument(s) when calling unshift");
         $stack = new Builder();
         $stack->unshift();
-        $resolved = $stack->resolve($app);
-
-        $this->assertSame($response,$resolved->handle($request));
-
     }
 
     /** @test */
