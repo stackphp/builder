@@ -18,6 +18,8 @@ class Builder
         if (func_num_args() > 0) {
             $spec = func_get_args();
             $this->specs->unshift($spec);
+        } else {
+            throw new \InvalidArgumentException("Missing argument(s) when calling unshift");
         }
 
         return $this;
@@ -28,6 +30,8 @@ class Builder
         if (func_num_args() > 0) {
             $spec = func_get_args();
             $this->specs->push($spec);
+        } else {
+            throw new \InvalidArgumentException("Missing argument(s) when calling push");
         }
 
         return $this;
