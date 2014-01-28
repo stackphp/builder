@@ -50,7 +50,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function pushShouldThrowOnInvalidInput()
     {
-        $this->setExpectedException("\\InvalidArgumentException","Missing argument(s) when calling push");
+        $this->setExpectedException('InvalidArgumentException', 'Missing argument(s) when calling push');
         $stack = new Builder();
         $stack->push();
     }
@@ -65,7 +65,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function unshiftShouldThrowOnInvalidInput()
     {
-        $this->setExpectedException("\\InvalidArgumentException","Missing argument(s) when calling unshift");
+        $this->setExpectedException('InvalidArgumentException', 'Missing argument(s) when calling unshift');
         $stack = new Builder();
         $stack->unshift();
     }
