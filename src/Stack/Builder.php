@@ -3,6 +3,7 @@
 namespace Stack;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\TerminableInterface;
 
 class Builder
 {
@@ -39,9 +40,9 @@ class Builder
 
     public function resolve(HttpKernelInterface $app)
     {
-        $middlewares = array($app);
-
         foreach ($this->specs as $spec) {
+            $prev = $app;
+
             $args = $spec;
             $firstArg = array_shift($args);
 
@@ -55,9 +56,11 @@ class Builder
                 $app = $reflection->newInstanceArgs($args);
             }
 
-            array_unshift($middlewares, $app);
+            if (!$app instanceof TerminableInterface && $prev instanceof TerminableInterface) {
+                $app = new StackedHttpKernel($app, $prev);
+            }
         }
 
-        return new StackedHttpKernel($app, $middlewares);
+        return $app;
     }
 }

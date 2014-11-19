@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 class StackedHttpKernel implements HttpKernelInterface, TerminableInterface
 {
     private $app;
-    private $middlewares = array();
+    private $prev;
 
-    public function __construct(HttpKernelInterface $app, array $middlewares)
+    public function __construct(HttpKernelInterface $app, TerminableInterface $prev)
     {
         $this->app = $app;
-        $this->middlewares = $middlewares;
+        $this->prev = $prev;
     }
 
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
@@ -25,10 +25,7 @@ class StackedHttpKernel implements HttpKernelInterface, TerminableInterface
 
     public function terminate(Request $request, Response $response)
     {
-        foreach ($this->middlewares as $kernel) {
-            if ($kernel instanceof TerminableInterface) {
-                $kernel->terminate($request, $response);
-            }
-        }
+        $app = $this->app instanceof TerminableInterface ? $this->app : $this->prev;
+        $app->terminate($request, $response);
     }
 }

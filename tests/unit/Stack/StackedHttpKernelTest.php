@@ -13,10 +13,12 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
     public function handleShouldDelegateToApp()
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
-        $kernel = new StackedHttpKernel($app, array($app));
+        $prev = $this->getTerminableMock();
+        $kernel = new StackedHttpKernel($app, $prev);
 
         $request = Request::create('/');
         $response = $kernel->handle($request);
+        $kernel->terminate($request, $response);
 
         $this->assertSame('ok', $response->getContent());
     }

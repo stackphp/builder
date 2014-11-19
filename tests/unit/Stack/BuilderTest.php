@@ -21,7 +21,6 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $request = Request::create('/');
         $response = $resolved->handle($request);
 
-        $this->assertInstanceOf('Stack\StackedHttpKernel', $resolved);
         $this->assertSame('ok', $response->getContent());
     }
 
