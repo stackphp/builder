@@ -25,9 +25,9 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
     public function handleShouldStillDelegateToAppWithMiddlewares()
     {
         $app = $this->getHttpKernelMock(new Response('ok'));
-        $foo = $this->getHttpKernelMock(new Response('foo'));
         $bar = $this->getHttpKernelMock(new Response('bar'));
-        $kernel = new StackedHttpKernel($app, array($app, $foo, $bar));
+        $foo = $this->getHttpKernelMock(new Response('foo'));
+        $kernel = new StackedHttpKernel($app, array($foo, $bar, $app));
 
         $request = Request::create('/');
         $response = $kernel->handle($request);
@@ -39,9 +39,9 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
     public function terminateShouldDelegateToMiddlewares()
     {
         $app = $this->getTerminableMock(new Response('ok'));
-        $foo = $this->getTerminableMock();
-        $bar = $this->getTerminableMock();
-        $kernel = new StackedHttpKernel($app, array($app, $foo, $bar));
+        $bar = $this->getDelegatingTerminableMock($app);
+        $foo = $this->getDelegatingTerminableMock($bar);
+        $kernel = new StackedHttpKernel($app, array($foo, $bar, $app));
 
         $request = Request::create('/');
         $response = $kernel->handle($request);
@@ -74,6 +74,22 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
                 $this->isInstanceOf('Symfony\Component\HttpFoundation\Request'),
                 $this->isInstanceOf('Symfony\Component\HttpFoundation\Response')
             );
+
+        return $app;
+    }
+
+    private function getDelegatingTerminableMock(TerminableInterface $next)
+    {
+        $app = $this->getMock('Stack\TerminableHttpKernel');
+        $app->expects($this->once())
+            ->method('terminate')
+            ->with(
+                $this->isInstanceOf('Symfony\Component\HttpFoundation\Request'),
+                $this->isInstanceOf('Symfony\Component\HttpFoundation\Response')
+            )
+            ->will($this->returnCallback(function ($request, $response) use ($next) {
+                $next->terminate($request, $response);
+            }));
 
         return $app;
     }
