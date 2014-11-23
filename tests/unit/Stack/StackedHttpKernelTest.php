@@ -44,7 +44,7 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
         $fourth = new TerminableKernelSpy($third);
         $fifth  = new TerminableKernelSpy($fourth);
 
-        $kernel = new StackedHttpKernel($first, $middlewares = array($fifth, $fourth, $third, $second, $first));
+        $kernel = new StackedHttpKernel($fifth, $middlewares = array($fifth, $fourth, $third, $second, $first));
 
         $request = Request::create('/');
         $response = $kernel->handle($request);
@@ -123,7 +123,7 @@ class KernelSpy implements HttpKernelInterface
         $this->handleCallCount++;
 
         if ($this->kernel) {
-            return $this->kernel->handle($response, $type, $catch);
+            return $this->kernel->handle($request, $type, $catch);
         }
 
         return new Response('OK');
