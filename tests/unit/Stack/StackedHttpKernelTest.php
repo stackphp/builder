@@ -38,14 +38,28 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function terminateShouldDelegateToMiddlewares()
     {
-        $app = $this->getTerminableMock(new Response('ok'));
-        $bar = $this->getDelegatingTerminableMock($app);
-        $foo = $this->getDelegatingTerminableMock($bar);
-        $kernel = new StackedHttpKernel($app, array($foo, $bar, $app));
+        $first  = new TerminableKernelSpy();
+        $second = new TerminableKernelSpy($first);
+        $third  = new KernelSpy($second);
+        $fourth = new TerminableKernelSpy($third);
+        $fifth  = new TerminableKernelSpy($fourth);
+
+        $kernel = new StackedHttpKernel($fifth, $middlewares = array($fifth, $fourth, $third, $second, $first));
 
         $request = Request::create('/');
         $response = $kernel->handle($request);
         $kernel->terminate($request, $response);
+
+        $this->assertTerminablesCalledOnce($middlewares);
+    }
+
+    private function assertTerminablesCalledOnce(array $middlewares)
+    {
+        foreach ($middlewares as $kernel) {
+            if ($kernel instanceof TerminableInterface) {
+                $this->assertEquals(1, $kernel->terminateCallCount(), "Terminate was called {$kernel->terminateCallCount()} times");
+            }
+        }
     }
 
     private function getHttpKernelMock(Response $response)
@@ -92,5 +106,50 @@ class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
             }));
 
         return $app;
+    }
+}
+
+class KernelSpy implements HttpKernelInterface
+{
+    private $handleCallCount = 0;
+
+    public function __construct(HttpKernelInterface $kernel = null)
+    {
+        $this->kernel = $kernel;
+    }
+
+    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    {
+        $this->handleCallCount++;
+
+        if ($this->kernel) {
+            return $this->kernel->handle($request, $type, $catch);
+        }
+
+        return new Response('OK');
+    }
+
+    public function handleCallCount()
+    {
+        return $this->handleCallCount;
+    }
+}
+
+class TerminableKernelSpy extends KernelSpy implements TerminableInterface
+{
+    private $terminateCallCount = 0;
+
+    public function terminate(Request $request, Response $response)
+    {
+        $this->terminateCallCount++;
+
+        if ($this->kernel && $this->kernel instanceof TerminableInterface) {
+            return $this->kernel->terminate($request, $response);
+        }
+    }
+
+    public function terminateCallCount()
+    {
+        return $this->terminateCallCount;
     }
 }
