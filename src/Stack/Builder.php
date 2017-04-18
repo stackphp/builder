@@ -41,17 +41,15 @@ class Builder
     {
         $middlewares = array($app);
 
-        foreach ($this->specs as $spec) {
-            $args = $spec;
+        foreach ($this->specs as $args) {
             $firstArg = array_shift($args);
 
             if (is_callable($firstArg)) {
                 $app = $firstArg($app);
             } else {
-                $kernelClass = $firstArg;
                 array_unshift($args, $app);
 
-                $reflection = new \ReflectionClass($kernelClass);
+                $reflection = new \ReflectionClass($firstArg);
                 $app = $reflection->newInstanceArgs($args);
             }
 
