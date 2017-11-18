@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+* 1.0.5 (2017-11-18)
+
+  * Add compability with Symfony 4.
+
 * 1.0.4 (2016-06-02)
 
   * Add compability with Symfony 3.
