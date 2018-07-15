@@ -72,7 +72,6 @@ class KernelStack implements HttpKernelInterface, TerminableInterface, ResetInte
 		if($this->handler instanceof TerminableInterface) {
 			$this->handler->terminate($request, $response);
 		}
-		$this->reset();
 	}
 
 	/**
