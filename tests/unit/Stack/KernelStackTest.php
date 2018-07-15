@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
 use Stack\KernelStack;
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /** @covers Stack\KernelStack */
 class KernelStackTest extends TestCase
@@ -55,7 +55,7 @@ class KernelStackTest extends TestCase
     
     private function getHttpKernelMock(Response $response)
     {
-        $app = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $app = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
         $app->expects($this->any())
             ->method('handle')
             ->with($this->isInstanceOf('Symfony\Component\HttpFoundation\Request'))

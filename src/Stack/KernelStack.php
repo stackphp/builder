@@ -7,9 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
-use Symfony\Contracts\Service\ResetInterface;
 
-class KernelStack implements HttpKernelInterface, TerminableInterface, ResetInterface
+class KernelStack implements HttpKernelInterface, TerminableInterface
 {
 
 	protected $app;
@@ -71,18 +70,6 @@ class KernelStack implements HttpKernelInterface, TerminableInterface, ResetInte
 	{
 		if($this->handler instanceof TerminableInterface) {
 			$this->handler->terminate($request, $response);
-		}
-	}
-
-	/**
-	 * Reset the kernel to its initial status.
-	 */
-	public function reset()
-	{
-		$this->builder = new Builder();
-		$this->handler = null;
-		if($this->app instanceof ResetInterface) {
-			$this->app->reset();
 		}
 	}
 }

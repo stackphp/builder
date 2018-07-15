@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /** @covers Stack\Builder */
 class BuilderTest extends TestCase
@@ -152,7 +152,7 @@ class BuilderTest extends TestCase
 
     private function getHttpKernelMock(Response $response)
     {
-        $app = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $app = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
         $app->expects($this->any())
             ->method('handle')
             ->with($this->isInstanceOf('Symfony\Component\HttpFoundation\Request'))
@@ -163,7 +163,7 @@ class BuilderTest extends TestCase
 
     private function getTerminableMock()
     {
-        $app = $this->getMock('Stack\TerminableHttpKernel');
+        $app = $this->createMock('Stack\TerminableHttpKernel');
         $app->expects($this->once())
             ->method('terminate')
             ->with(

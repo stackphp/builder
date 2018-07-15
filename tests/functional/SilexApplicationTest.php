@@ -6,7 +6,7 @@ use Silex\Application;
 use Stack\Builder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase as TestCase;
 
 class SilexApplicationTest extends TestCase
 {
