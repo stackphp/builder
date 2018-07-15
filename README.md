@@ -36,10 +36,10 @@ $stack = (new Stack\Builder())
 
 $app = $stack->resolve($app);
 ```
-or using the Stack/StackKernel : 
+or using the Stack/KernelStack : 
 
 ```php
-$app = new Stack\StackKernel($app);
+$app = new Stack\KernelStack($app);
 
 $app->push('Stack\Session')
     ->push('Symfony\Component\HttpKernel\HttpCache\HttpCache', new Store(__DIR__.'/cache'));
