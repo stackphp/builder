@@ -65,7 +65,7 @@ class StackedHttpKernelTest extends TestCase
 
     private function getHttpKernelMock(Response $response)
     {
-        $app = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $app = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
         $app->expects($this->any())
             ->method('handle')
             ->with($this->isInstanceOf('Symfony\Component\HttpFoundation\Request'))
@@ -76,7 +76,7 @@ class StackedHttpKernelTest extends TestCase
 
     private function getTerminableMock(Response $response = null)
     {
-        $app = $this->createMock('Stack\TerminableHttpKernel');
+        $app = $this->getMock('Stack\TerminableHttpKernel');
         if ($response) {
             $app->expects($this->any())
                 ->method('handle')
@@ -95,7 +95,7 @@ class StackedHttpKernelTest extends TestCase
 
     private function getDelegatingTerminableMock(TerminableInterface $next)
     {
-        $app = $this->createMock('Stack\TerminableHttpKernel');
+        $app = $this->getMock('Stack\TerminableHttpKernel');
         $app->expects($this->once())
             ->method('terminate')
             ->with(

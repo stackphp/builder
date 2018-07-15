@@ -55,7 +55,7 @@ class KernelStackTest extends TestCase
     
     private function getHttpKernelMock(Response $response)
     {
-        $app = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $app = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
         $app->expects($this->any())
             ->method('handle')
             ->with($this->isInstanceOf('Symfony\Component\HttpFoundation\Request'))

@@ -152,7 +152,7 @@ class BuilderTest extends TestCase
 
     private function getHttpKernelMock(Response $response)
     {
-        $app = $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $app = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
         $app->expects($this->any())
             ->method('handle')
             ->with($this->isInstanceOf('Symfony\Component\HttpFoundation\Request'))
@@ -163,7 +163,7 @@ class BuilderTest extends TestCase
 
     private function getTerminableMock()
     {
-        $app = $this->createMock('Stack\TerminableHttpKernel');
+        $app = $this->getMock('Stack\TerminableHttpKernel');
         $app->expects($this->once())
             ->method('terminate')
             ->with(
