@@ -6,8 +6,9 @@ use Silex\Application;
 use Stack\Builder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use PHPUnit\Framework\TestCase;
 
-class SilexApplicationTest extends \PHPUnit_Framework_TestCase
+class SilexApplicationTest extends TestCase
 {
     public function testWithAppendMiddlewares()
     {
