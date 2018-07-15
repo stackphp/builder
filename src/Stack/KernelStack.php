@@ -24,13 +24,13 @@ class KernelStack implements HttpKernelInterface, TerminableInterface, ResetInte
 		$this->builder = new Builder();
 	}
 
-	public function push(...$kernel): self
+	public function push(...$kernel)
 	{
 		$this->builder->push(...$kernel);
 		return $this;
 	}
 
-	public function unshift(...$kernel): self
+	public function unshift(...$kernel)
 	{
 		$this->builder->unshift(...$kernel);
 		return $this;
