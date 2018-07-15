@@ -7,9 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
 use Stack\KernelStack;
+use PHPUnit\Framework\TestCase;
 
 /** @covers Stack\KernelStack */
-class KernelStackTest extends \PHPUnit_Framework_TestCase
+class KernelStackTest extends TestCase
 {
     /** @test */
     public function withoutMiddlewaresItShouldReturnOriginalResponse()
