@@ -140,8 +140,12 @@ class BuilderTest extends TestCase
         $app = $this->getHttpKernelMock(new Response('ok'));
 
         $stack = new Builder();
-        $stack->push(function ($app) { return new Append($app, '.foo'); });
-        $stack->push(function ($app) { return new Append($app, '.bar'); });
+        $stack->push(function ($app) {
+            return new Append($app, '.foo');
+        });
+        $stack->push(function ($app) {
+            return new Append($app, '.bar');
+        });
         $resolved = $stack->resolve($app);
 
         $request = Request::create('/');
