@@ -36,6 +36,16 @@ $stack = (new Stack\Builder())
 
 $app = $stack->resolve($app);
 ```
+or using the Stack/StackKernel : 
+
+```php
+$app = new Stack\StackKernel($app);
+
+$app->push('Stack\Session')
+    ->push('Symfony\Component\HttpKernel\HttpCache\HttpCache', new Store(__DIR__.'/cache'));
+```
+
+
 As you can see, by arranging the layers as a stack, they become a lot easier
 to work with.
 
