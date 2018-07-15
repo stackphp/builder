@@ -6,8 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
+use PHPUnit\Framework\TestCase;
 
-class StackedHttpKernelTest extends \PHPUnit_Framework_TestCase
+class StackedHttpKernelTest extends TestCase
 {
     /** @test */
     public function handleShouldDelegateToApp()
