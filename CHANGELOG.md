@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* 1.0.6 (2018-7-15)
+  * Add KernelStack class 
+
 * 1.0.5 (2017-11-18)
 
   * Add compability with Symfony 4.
