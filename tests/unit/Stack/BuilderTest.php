@@ -53,7 +53,7 @@ class BuilderTest extends TestCase
     public function pushShouldThrowOnInvalidInput()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('Missing argument(s) when calling push');
+        $this->expectExceptionMessage('Missing argument(s) when calling push');
         $stack = new Builder();
         $stack->push();
     }
@@ -69,7 +69,7 @@ class BuilderTest extends TestCase
     public function unshiftShouldThrowOnInvalidInput()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('Missing argument(s) when calling unshift');
+        $this->expectExceptionMessage('Missing argument(s) when calling unshift');
         $stack = new Builder();
         $stack->unshift();
     }

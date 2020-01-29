@@ -3,6 +3,9 @@
 <phpunit backupGlobals="false"
          colors="true"
          bootstrap="./tests/bootstrap.php"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
 >
     <testsuites>
         <testsuite name="unit">
