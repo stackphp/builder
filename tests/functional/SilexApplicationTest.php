@@ -2,12 +2,13 @@
 
 namespace functional;
 
+use PHPUnit\Framework\TestCase;
 use Silex\Application;
 use Stack\Builder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class SilexApplicationTest extends \PHPUnit_Framework_TestCase
+class SilexApplicationTest extends TestCase
 {
     public function testWithAppendMiddlewares()
     {
