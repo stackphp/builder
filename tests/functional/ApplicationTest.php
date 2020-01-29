@@ -2,22 +2,18 @@
 
 namespace functional;
 
+use Application;
 use PHPUnit\Framework\TestCase;
-use Silex\Application;
 use Stack\Builder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class SilexApplicationTest extends TestCase
+class ApplicationTest extends TestCase
 {
     public function testWithAppendMiddlewares()
-    {
+    {        
+        $request = Request::create('/foo');
         $app = new Application();
-
-        $app->get('/foo', function () {
-            return 'bar';
-        });
-
         $finished = false;
 
         $app->finish(function () use (&$finished) {
@@ -30,8 +26,6 @@ class SilexApplicationTest extends TestCase
             ->push('functional\Append', '.B');
 
         $app = $stack->resolve($app);
-
-        $request = Request::create('/foo');
         $response = $app->handle($request);
         $app->terminate($request, $response);
 
