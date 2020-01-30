@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+* 1.0.6 (2020-01-30)
+
+  * Add compability with Symfony 5.
+  * Remove Silex dependencies for tests.
+
 * 1.0.5 (2017-11-18)
 
   * Add compability with Symfony 4.
