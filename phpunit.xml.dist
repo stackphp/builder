@@ -2,21 +2,18 @@
 
 <phpunit backupGlobals="false"
          colors="true"
-         bootstrap="vendor/autoload.php"
+         bootstrap="./tests/bootstrap.php"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
 >
     <testsuites>
         <testsuite name="unit">
             <directory>./tests/unit/</directory>
         </testsuite>
-    </testsuites>
-
-    <testsuites>
         <testsuite name="integration">
             <directory>./tests/integration/</directory>
         </testsuite>
-    </testsuites>
-
-    <testsuites>
         <testsuite name="functional">
             <directory>./tests/functional/</directory>
         </testsuite>

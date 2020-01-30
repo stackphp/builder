@@ -2,13 +2,15 @@
 
 namespace Stack;
 
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
 
 /** @covers Stack\Builder */
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends TestCase
 {
     /** @test */
     public function withoutMiddlewaresItShouldReturnOriginalResponse()
@@ -50,7 +52,8 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function pushShouldThrowOnInvalidInput()
     {
-        $this->setExpectedException('InvalidArgumentException', 'Missing argument(s) when calling push');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Missing argument(s) when calling push');
         $stack = new Builder();
         $stack->push();
     }
@@ -65,7 +68,8 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function unshiftShouldThrowOnInvalidInput()
     {
-        $this->setExpectedException('InvalidArgumentException', 'Missing argument(s) when calling unshift');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Missing argument(s) when calling unshift');
         $stack = new Builder();
         $stack->unshift();
     }
@@ -151,7 +155,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     private function getHttpKernelMock(Response $response)
     {
-        $app = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
+        $app = $this->createMock(HttpKernelInterface::class);
         $app->expects($this->any())
             ->method('handle')
             ->with($this->isInstanceOf('Symfony\Component\HttpFoundation\Request'))
@@ -162,7 +166,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     private function getTerminableMock()
     {
-        $app = $this->getMock('Stack\TerminableHttpKernel');
+        $app = $this->createMock(TerminableHttpKernel::class);
         $app->expects($this->once())
             ->method('terminate')
             ->with(
