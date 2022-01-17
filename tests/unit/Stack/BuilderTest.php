@@ -193,7 +193,7 @@ class Append implements HttpKernelInterface
         $this->appendix = $appendix;
     }
 
-    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true): Response
     {
         $response = clone $this->app->handle($request, $type, $catch);
         $response->setContent($response->getContent().$this->appendix);

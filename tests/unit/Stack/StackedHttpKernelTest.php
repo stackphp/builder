@@ -119,7 +119,7 @@ class KernelSpy implements HttpKernelInterface
         $this->kernel = $kernel;
     }
 
-    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true): Response
     {
         $this->handleCallCount++;
 

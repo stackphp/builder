@@ -44,7 +44,7 @@ class Application implements HttpKernelInterface
         $this->kernel = new HttpKernel($this->dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
     }
 
-    public function handle(Request $request, int $type = HttpKernelInterface::MASTER_REQUEST, bool $catch = true)
+    public function handle(Request $request, int $type = HttpKernelInterface::MASTER_REQUEST, bool $catch = true): Response
     {
         return $this->kernel->handle($request);
     }
