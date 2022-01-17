@@ -6,6 +6,7 @@ use Application;
 use PHPUnit\Framework\TestCase;
 use Stack\Builder;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class ApplicationTest extends TestCase
@@ -45,7 +46,7 @@ class Append implements HttpKernelInterface
         $this->appendix = $appendix;
     }
 
-    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true): Response
     {
         $response = clone $this->app->handle($request, $type, $catch);
         $response->setContent($response->getContent().$this->appendix);
